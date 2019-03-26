@@ -1,0 +1,100 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  
+    config.vm.define "master" do |master|
+      # Box Settings
+      master.vm.box = "ubuntu/trusty64"
+      master.vm.hostname = "master"
+  
+      # Provider Settings
+      master.vm.provider "virtualbox" do |vb|
+        # Display the VirtualBox GUI when booting the machine
+        vb.gui = false
+        vb.name = "master"
+        # Customize the amount of memory on the VM:
+        vb.memory = "1024"
+      end
+  
+      # Network Settings
+      # master.vm.network "forwarded_port", guest: 80, host: 8080
+      # master.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+      master.vm.network "private_network", ip: "192.168.33.100"
+      # master.vm.network "public_network"
+  
+      # Folder Settings
+      # master.vm.synced_folder "../data", "/vagrant_data"
+  
+      # Provision Settings
+      # master.vm.provision "shell", inline: <<-SHELL
+      #   apt-get update
+      #   apt-get install -y apache2
+      # SHELL
+      #master.vm.provision "shell", path: "provision/bootstrap-master.sh", privileged: false
+    end
+    
+    config.vm.define "slave" do |slave|
+      # Box Settings
+      slave.vm.box = "ubuntu/trusty64"
+      slave.vm.hostname = "slave"
+  
+      # Provider Settings
+      slave.vm.provider "virtualbox" do |vb|
+        # Display the VirtualBox GUI when booting the machine
+        vb.gui = false
+        vb.name = "slave"
+        # Customize the amount of memory on the VM:
+        vb.memory = "1024"
+      end
+  
+      # Network Settings
+      # slave.vm.network "forwarded_port", guest: 80, host: 8080
+      # slave.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+      slave.vm.network "private_network", ip: "192.168.33.101"
+      # slave.vm.network "public_network"
+  
+      # Folder Settings
+      # slave.vm.synced_folder "../data", "/vagrant_data"
+  
+      # Provision Settings
+      # slave.vm.provision "shell", inline: <<-SHELL
+      #   apt-get update
+      #   apt-get install -y apache2
+      # SHELL
+      #slave.vm.provision "shell", path: "provision/bootstrap-slave.sh", privileged: false
+    end
+
+    config.vm.define "slave2" do |slave|
+      # Box Settings
+      slave.vm.box = "ubuntu/trusty64"
+      slave.vm.hostname = "slave2"
+  
+      # Provider Settings
+      slave.vm.provider "virtualbox" do |vb|
+        # Display the VirtualBox GUI when booting the machine
+        vb.gui = false
+        vb.name = "slave2"
+        # Customize the amount of memory on the VM:
+        vb.memory = "1024"
+      end
+  
+      # Network Settings
+      # slave.vm.network "forwarded_port", guest: 80, host: 8080
+      # slave.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+      slave.vm.network "private_network", ip: "192.168.33.102"
+      # slave.vm.network "public_network"
+  
+      # Folder Settings
+      # slave.vm.synced_folder "../data", "/vagrant_data"
+  
+      # Provision Settings
+      # slave.vm.provision "shell", inline: <<-SHELL
+      #   apt-get update
+      #   apt-get install -y apache2
+      # SHELL
+      #slave.vm.provision "shell", path: "provision/bootstrap-slave.sh", privileged: false
+    end
+  
+  end
+  
