@@ -87,12 +87,15 @@ sudo make install
 Saat melakukan kompilasi dengan ``make``, membutuhkan waktu yang lumayan lama, jadi mohon bersabar. Jika saat proses kompilasi gagal, ada kemungkinan memori yang dialokasikan pada saat instalasi vagrantbox itu kurang mencukupi, jadi apabila menemui kasus demikian, maka lakukan instalasi ulang pada vagrantbox dengan memperbesar alokasi memori. Jika berhasil, maka pada masing-masing node terdapat folder ``redis-stable`` yang berisikan file ``redis.conf`` dan ``sentinel.conf``.
 
 - Pada redisMaster
+
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/1.JPG)
 
 - Pada redisSlave2
+
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/2.JPG)
 
 - Pada redisSlave3
+
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/3.JPG)
 
 ### 3.2. Konfigurasi Redis
@@ -106,16 +109,19 @@ sudo ufw allow from 192.168.33.13 (redisSlave3)
 ```
 
 Konfigurasi firewall pada redisMaster
+
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/4.JPG)
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/5.JPG)
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/10.JPG)
 
 Konfigurasi firewall pada redisSlave2
+
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/6.JPG)
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/7.JPG)
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/11.JPG)
 
 Konfigurasi firewall pada redisSlave3
+
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/8.JPG)
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/9.JPG)
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/12.JPG)
@@ -129,6 +135,7 @@ port 6379
 dir .
 logfile "/home/vagrant/redis-stable/redis.log"
 ```
+
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/13.JPG)
 
 - Pada redisSlave2 dan redisSlave3:
@@ -139,6 +146,7 @@ dir .
 slaveof 192.168.33.11 6379
 logfile "/home/vagrant/redis-stable/redis.log"
 ```
+
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/14.JPG)
 
 Setelah itu, sekarang giliran file ``sentinel.conf`` pada masing-masing node kita lakukan konfigurasi sebagai berikut:
@@ -151,6 +159,7 @@ sentinel monitor mymaster 192.168.33.11 6379 2
 sentinel down-after-milliseconds mymaster 5000
 sentinel failover-timeout mymaster 10000
 ```
+
 ![alt_text](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/15.JPG)
 
 Jangan lupa untuk menaruh logfile-nya berdasarkan path pada root. Selesai konfigurasi di atas, kita akan mengaktifkan redis sebagai berikut:
@@ -164,12 +173,15 @@ src/redis-server sentinel.conf --sentinel &
 Jika terdapat masalah saat melakukan eksekusi command di atas, coba cek path penempatan log kalian pada root. Apabila sudah benar tapi masih bermasalah, coba untuk backup file ``redis.conf`` dan ``sentinel.conf`` kemudian buat file ``redis.conf`` dan ``sentinel.conf`` yang baru lalu diisikan konfigurasi sesuai yang dijabarkan di atas. 2 langkah tersebut berhasil mengatasi permasalahan yang saya hadapi. Apabila sudah berhasil, untuk melakukan mengecek status coba ketikkan ``ps -ef | grep redis`` maka akan muncul sebagai berikut:
 
 - Pada redisMaster
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/16.JPG)
 
 - Pada redisSlave2
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/17.JPG)
 
 - Pada redisSlave3
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/18.JPG)
 
 Apabila pengecekan sesuai dengan yang di atas, maka seharusnya testing ping dari masing masing node akan berjalan dengan lancar. Untuk command-nya, bisa dipilih salah satu dari berikut:
@@ -181,49 +193,62 @@ redis-cli -h IP_Address ping (IP_Address: Alamat IP masing-masing node)
 ```
 
 Akan muncul ``pong`` apabila berhasil melakukan ping.
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/19.JPG)
 
 Jika testing ping berhasil, maka seharusnya semua node sudah saling terhubung. Oleh karena itu, kita akan cek logfile ``redis.log`` dan ``sentinel.log`` dari masing-masing node:
 
 - ``redis.log`` pada redisMaster:
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/20.JPG)
 
 - ``sentinel.log`` pada redisMaster:
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/21.JPG)
 
 - ``redis.log`` pada redisSlave2:
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/22.JPG)
 
 - ``sentinel.log`` pada redisSlave2:
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/23.JPG)
 
-- ``redis.log`` pada redisSlave2:
+- ``redis.log`` pada redisSlave3:
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/24.JPG)
 
-- ``sentinel.log`` pada redisSlave2:
+- ``sentinel.log`` pada redisSlave3:
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/25.JPG)
 
 Pada file ``sentinel.conf`` di masing-masing node otomatis akan ada konfigurasi baru sebagai berikut:
 
 - Pada redisMaster:
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/26.JPG)
 
 - Pada redisSlave2:
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/27.JPG)
 
 - Pada redisSlave3:
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/28.JPG)
 
 ## 4. Uji Coba Redis
 Kita akan melakukan uji coba Redis dengan melihat info Redis pada tiap-tiap node, kemudian pada node redisMaster kita set demokey dengan memasukkan nilai ``Halo, 2 slave yang lain... :)``. Seharusnya, apabila uji konfigurasi di atas berhasil dilakukan semua, maka demokey yang telah di-set pada redisMaster akan bisa dibaca oleh semua node sebagai berikut:
 
 - Pada redisMaster:
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/29.JPG)
 
 - Pada redisSlave2:
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/30.JPG)
 
 - Pada redisSlave3:
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/31.JPG)
 
 Dengan demikian, redis berhasil melakukan replikasi pada tiap-tiap node/slave.
@@ -240,15 +265,19 @@ redis-cli -p 6379 DEBUG SEGFAULT
 ```
 
 Saya akan menggunakan command ``redis-cli -p 6379 DEBUG sleep 30`` untuk menonaktifkan redisMaster selama 30 detik.
+
 redisMaster
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/32.JPG)
 
 redisMaster berhasil dimatikan, maka salah satu slave akan menjadi master saat terjadi demikian:
 
-redisSlave2 tetap menjadi slave.
+- redisSlave2 tetap menjadi slave.
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/33.JPG)
 
-redisSlave3 berubah role menjadi master.
+- redisSlave3 berubah role menjadi master.
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/NoSQL/Redis/screenshot/34.JPG)
 
 Dengan demikian, uji coba failover pada redis sukses dilakukan. Untuk node redisMaster saat sudah menyala kembali, role yang dia dapatkan adalah sebagai slave, bukan menjadi master. Untuk role master tetap pada redisSlave3.
