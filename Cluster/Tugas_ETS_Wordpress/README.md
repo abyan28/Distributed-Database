@@ -125,7 +125,7 @@ Terlihat bahwa saya tetap bisa memposting sesuatu walaupun Data Node 1 tidak akt
 
 ![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/17.JPG)
 
-![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/18.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/15.JPG)
 
 Ternyata saya tetap bisa melihat postingan tadi walaupun Data Node 1 tidak aktif, sebab ketika Data Node 1 dinyalakan dia langsung mereplikasi data yang ada di Data Node 2, sehingga ketika Data Node 2 dimatikan, data masih tetap sama dan dapat diakses. Artinya, MySQL Cluster berhasil saling mereplikasi.
 
