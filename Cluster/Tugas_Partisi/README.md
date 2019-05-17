@@ -4,13 +4,13 @@
 
 Sebelum mengecek apakah plugin partition sudah aktif atau belum, kita buat database terlebih dahulu untuk menyimpan tabel-tabel yang akan kita buat nanti.
 
-![](/Screenshot/1.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/1.JPG)
 
 Sudah kita buat database ``Partisi`` pada Service.
 
 Lalu kita berikan permission agar user ``abyan`` dapat mengakses database ``partisi`` dari ProxySQL.
 
-![](/Screenshot/2.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/2.JPG)
 
 Setelah itu, baru kita cek plugin partition-nya, dengan menggunakan syntax berikut:
 
@@ -30,7 +30,7 @@ SELECT
 ```
  Output yang dihasilkan sebagai berikut :
 
-![](/Screenshot/3.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/3.JPG)
 
 ## 2. Membuat Partisi
 Membuat tabel dengan menggunakan partisi.
@@ -50,7 +50,7 @@ PARTITION BY RANGE COLUMNS(a, b) (
 );
 ~~~
 
-![](/Screenshot/4.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/4.JPG)
 
 Insert nilai ke dalam ``rc1``, nanti nilai tersebut akan otomatis dikategorikan ke dalam partisi yang telah kita buat.
 
@@ -66,7 +66,7 @@ INSERT INTO rc1 (a,b) VALUES (5,13);
 INSERT INTO rc1 (a,b) VALUES (6,13);
 ~~~
 
-![](/Screenshot/5.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/5.JPG)
 
 Kita lakukan query sebagai berikut:
 
@@ -74,7 +74,7 @@ Kita lakukan query sebagai berikut:
 SELECT *,'p0' FROM rc1 PARTITION (p0) UNION ALL SELECT *,'p3' FROM rc1 PARTITION (p3) ORDER BY a,b ASC;
 ~~~
 
-![](/Screenshot/6.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/6.JPG)
 
 Seperti yang bisa dilihat, yang memiliki nilai <= 5,12 akan dikategorikan ke dalam ``p0``.
 
@@ -94,7 +94,7 @@ PARTITION BY LIST (serverid)(
 );
 ~~~
 
-![](/Screenshot/7.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/7.JPG)
 
 Insert nilai ke dalam ``serverlogs``, nanti nilai tersebut akan otomatis dikategorikan ke dalam partisi yang telah kita buat.
 
@@ -103,7 +103,7 @@ insert  into `serverlogs`(`serverid`,`logdata`,`created`) values (12,'transaksi'
 
 ~~~
 
-![](/Screenshot/8.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/8.JPG)
 
 Terus kita coba melakukan query sebagai berikut:
 
@@ -111,7 +111,7 @@ Terus kita coba melakukan query sebagai berikut:
 SELECT *,'server_east' FROM serverlogs PARTITION (server_east) UNION ALL SELECT *,'server_west' FROM serverlogs PARTITION (server_west) ORDER BY server_east ASC;
 ~~~
 
-![](/Screenshot/9.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/9.JPG)
 
 Seperti yang bisa dilihat, yang memiliki ``serverid`` 1,43 akan dikategorikan ke wilayah ``server_east``.
 
@@ -129,7 +129,7 @@ PARTITION BY HASH (serverid)
 PARTITIONS 10;
 ~~~
 
-![](/Screenshot/10.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/10.JPG)
 
 Insert nilai ke dalam ``serverlogs2``, nanti nilai tersebut akan otomatis dikategorikan ke dalam partisi yang telah kita buat.
 
@@ -138,7 +138,7 @@ insert  into `serverlogs2`(`serverid`,`logdata`,`created`) values (12,'transaksi
 
 ~~~
 
-![](/Screenshot/11.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/11.JPG)
 
 Terus kita coba melakukan query sebagai berikut:
 
@@ -156,7 +156,7 @@ SELECT *,'p9' FROM serverlogs2 PARTITION (p9)
 ORDER BY serverid ASC;
 ~~~
 
-![](/Screenshot/12.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/12.JPG)
 
 Seperti yang bisa dilihat, nilai yang diinputkan ke dalam database akan secara otomatis dikategorikan sesuai partisi yang dibuat dari hash.
 
@@ -177,7 +177,7 @@ PARTITION BY KEY()
 PARTITIONS 10;
 ~~~
 
-![](/Screenshot/13.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/13.JPG)
 
 Insert nilai ke dalam ``serverlogs4``, nanti nilai tersebut akan otomatis dikategorikan ke dalam partisi yang telah kita buat.
 
@@ -185,7 +185,7 @@ Insert nilai ke dalam ``serverlogs4``, nanti nilai tersebut akan otomatis dikate
 insert  into `serverlogs4`(`serverid`,`logdata`,`created`) values (12,'transaksi','2019-03-18 13:34:23'),(22,'download','2019-03-18 14:26:09'),(56,'view','2019-03-19 16:09:30'),(196,'upload','2019-03-20 01:33:56'),(43,'transaksi','2019-03-19 08:58:17'),(6422,'transaksi','2019-03-20 23:40:22');
 ~~~
 
-![](/Screenshot/14.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/14.JPG)
 
 Terus kita coba melakukan query sebagai berikut:
 
@@ -203,7 +203,7 @@ SELECT *,'p4' FROM serverlogs4 PARTITION (p9)
 ORDER BY serverid ASC;
 ~~~
 
-![](/Screenshot/15.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/15.JPG)
 
 Seperti yang bisa dilihat, nilai yang diinputkan ke dalam database akan secara otomatis dikategorikan sesuai partisi yang dibuat dari key berdasarkan unique key.
 
@@ -213,22 +213,22 @@ Seperti yang bisa dilihat, nilai yang diinputkan ke dalam database akan secara o
 
 Hasil explain pada tabel measure.
 
-![](/Screenshot/17.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/17.JPG)
 
 Hasil explain pada tabel measure partitioned.
 
-![](/Screenshot/18.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/18.JPG)
 
 
 ### The SELECT Queries Benchmark
 
 Hasil select pada tabel measure.
 
-![](/Screenshot/19.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/19.JPG)
 
 Hasil select pada tabel measure partitioned.
 
-![](/Screenshot/20.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/20.JPG)
 
 ### The Big Delete Benchmark
 
@@ -240,23 +240,23 @@ ALTER TABLE `tugas2`.`partitioned_measures`
 ADD INDEX `index1` (`measure_timestamp` ASC);
 ~~~
 
-![](/Screenshot/21.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/21.JPG)
 
 Hasil delete pada tabel measure.
 
-![](/Screenshot/22.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/22.JPG)
 
 Hasil delete pada tabel measure partitioned.
 
-![](/Screenshot/23.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/23.JPG)
 
 Hasil delete pada tabel measure membutuhkan waktu lebih dari 7 menit.
 
-![](/Screenshot/24.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/24.JPG)
 
 Hasil delete pada tabel measure partitioned membutuhkan waktu kurang dari 3 detik.
 
-![](/Screenshot/25.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_Partisi/Screenshot/25.JPG)
 
 # 4. Referensi
 https://www.vertabelo.com/blog/technical-articles/everything-you-need-to-know-about-mysql-partitions
