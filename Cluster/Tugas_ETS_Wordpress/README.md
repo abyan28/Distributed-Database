@@ -111,29 +111,29 @@ Dan ternyata Data Node-nya sudah berhasil menyimpan Schema WordPress yang telah 
 ## C. Simulasi Fail Over
 Saya menggunakan Data Node untuk mensimulasikan fail over pada aplikasi WordPress ini. Sebelumnya, kita cek terlebih dahulu koneksi pada service node:
 
-![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/12.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/13.JPG)
 
 Semua node terkoneksi dengan baik. Lalu saya coba matikan Data Node 1, setelah itu saya akan membuat postingan di WordPress:
-
-![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/13.JPG)
 
 ![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/14.JPG)
 
 ![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/15.JPG)
 
-Terlihat bahwa saya tetap bisa memposting sesuatu walaupun Data Node 1 tidak aktif, sebab masih ada Data Node 2 yang aktif. Sekarang coba kita ganti untuk menonaktifkan Data Node 2, lalu kita lihat apakah postingan tadi bisa diakses atau tidak:
-
 ![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/16.JPG)
 
+Terlihat bahwa saya tetap bisa memposting sesuatu walaupun Data Node 1 tidak aktif, sebab masih ada Data Node 2 yang aktif. Sekarang coba kita ganti untuk menonaktifkan Data Node 2, lalu kita lihat apakah postingan tadi bisa diakses atau tidak:
+
 ![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/17.JPG)
+
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/18.JPG)
 
 Ternyata saya tetap bisa melihat postingan tadi walaupun Data Node 1 tidak aktif, sebab ketika Data Node 1 dinyalakan dia langsung mereplikasi data yang ada di Data Node 2, sehingga ketika Data Node 2 dimatikan, data masih tetap sama dan dapat diakses. Artinya, MySQL Cluster berhasil saling mereplikasi.
 
 Lalu bagaimana jika kedua Data Node mati? Mari kita lihat:
 
-![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/18.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/20.JPG)
 
-![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/19.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/21.JPG)
 
 Jadi, ketika kedua Data Node mati, service juga akan mati, sebab service tidak dapat mengakses Data Node manapun.
 
@@ -148,7 +148,7 @@ Ada beberapa step yang harus dilakukan untuk menggunakan aplikasi JMeter. Dalam 
 – Ramp-Up period ( in seconds ) : Isi berapa waktu delay antara user satu dengan yang lainnya dalam mengakses web. Saya isi 30 seconds.
 – Loop Count : Waktu eksekusi, bertahap atau seterusnya. Saya isi 10.
 
-![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/20.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/22.JPG)
 
 ### D.2. Add JMeter Element
 Menambahkan web server/IP Address yang akan ditest. Caranya :
@@ -156,14 +156,14 @@ Menambahkan web server/IP Address yang akan ditest. Caranya :
 2. Add > Config Element > HTTP Request Defaults
 3. Pada Web Server, isi Server Name atau IP dan Portnya atau website/url yang akan dites. Jika diisi URL, maka harus berformat ``http://www.``.
 
-![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/21.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/23.JPG)
 
 4. Jika tidak hanya halaman utama yang di test, kita bisa menambahkan path/foldernya, caranya :
 - Klik Kanan Threads Group
 - Add > Sampler > HTTP Request
 - Isi web server, port dan path
 
-![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/22.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/24.JPG)
 
 ### D.3. Add Listener
 Menampilkan proses dan hasil test secara grafis atau bentuk tabel. Caranya :
@@ -178,8 +178,8 @@ Menjalankan Test secara otomatis. Caranya :
 
 Berikut adalah hasil dalam bentuk Graph yang dilakukan dalam pengujian load test menggunakan JMeter:
 
-![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/23.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/26.JPG)
 
 Berikut adalah hasil dalam bentuk Tabel yang dilakukan dalam pengujian load test menggunakan JMeter:
 
-![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/24.JPG)
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster/Tugas_ETS_Wordpress/screenshot/25.JPG)
