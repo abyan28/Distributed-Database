@@ -46,7 +46,7 @@ define( 'WP_REDIS_SERVERS', [
 ] );
 ~~~ 
 
-![]() 
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/4.JPG) 
 
 ## E. Instalasi Redis
 Instalasi redis saya lakukan di clusterdb1, clusterdb2, dan clusterdb3. Untuk proses dan langkah-langkahnya persis dengan yang sudah saya dokumentasikan pada tugas sebelumnya dan dapat dilihat [di sini](https://github.com/abyan28/Distributed-Database/tree/master/NoSQL/Redis).
@@ -64,7 +64,7 @@ sudo ufw allow from 192.168.33.13 (redisSlave3)
 ## F. Instalasi Redis Object Cache
 Pastikan bahwa WordPress berjalan dengan baik pada MySQL Cluster dan Redis yang diinstal pada clusterdb1-clusterdb3 dapat berkomunikasi. Jika sudah, langkah selanjutnya adalah masuk ke dalam dashboard WordPress. Pilih menu ``Plugin`` dan klik ``Add New``. Ketikkan pada pencarian ``redis``, maka ``Redis Object Cache`` muncul pada bagian paling atas.
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/1.JPG)
 
 Klik ``install now``. Jika diminta untuk melakukan koneksi dengan ftp, maka kita harus mengubah ``owner`` dari file-file yang ada di folder ``/var/www/html/wordpress`` dengan cara:
 
@@ -72,19 +72,19 @@ Klik ``install now``. Jika diminta untuk melakukan koneksi dengan ftp, maka kita
 sudo chown -Rf www-data.www-data *
 ~~~
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/2.JPG)
 
 Silahkan refresh lagi browser-nya, maka tidak ada permintaan koneksi dengan ftp lagi, melainkan akan melakukan instalasi langsung. Jika berhasil, pada menu plugin akan muncul sebagai berikut:
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/3.JPG)
 
 Klik ``activate`` lalu klik ``settings``, maka akan di-redirect ke menu Settings untuk Redis.
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/0.JPG)
 
 Langsung klik ``Enable Object Cache``, maka Redis pada WordPress akan terkoneksi dengan node redis yang telah kita install.
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/5.JPG)
 
 Terlihat bahwa statusnya ``Connected``. Sekarang WordPress telah dibekali dengan MySQL CLuster dan Redis. 
 
@@ -93,37 +93,41 @@ Untuk failover test pada MySQL Cluster di WordPress, bisa dilihat [di sini](http
 
 Untuk failover test pada Redis di WordPress, kita dapat menggunakan command ``redis-cli monitor`` pada clusterdb1, clusterdb2, dan clusterdb3. Dengan mengeksekusi command tersebut, kita dapat mengetahui aktifitas yang sedang berjalan pada Redis. Saya akan mengeksekusi command tersebut, setelah itu saya akan me-refresh WordPress-nya. Sebelumnya, untuk mengetahui yang mana clusterdb1 dengan yang lainnya, bisa dilihat dari tab yang sedang berjalan. Tab tersebut berurutan dari kiri ke kanan dengan clusterdb1 paling kiri dan clusterdb6 paling kanan.
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/6.JPG)
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/7.JPG)
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/8.JPG)
 
-Terlihat bahwa ada aktifitas WordPress yang berjalan di clusterdb3 atau redisSlave2. Sekarang kita akan coba matikan redis-nya pada clusterdb3/redisSlave2 dan redis mana yang akan mencatat aktifitas WordPress.
+Terlihat bahwa ada aktifitas WordPress yang berjalan di clusterdb3/redisSlave2. Sekarang kita akan coba matikan redis-nya pada clusterdb3/redisSlave2 dan redis mana yang akan mencatat aktifitas WordPress.
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/9.JPG)
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/10.JPG)
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/11.JPG)
 
 Ternyata pada clusterdb2/redisSlave1 yang menggantikan peran redisSlave2 yang telah dinonaktifkan tadi. Bagaimana jika 2 slave redis mati semua? 
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/12.JPG)
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/13.JPG)
 
 Redis masih tetap bisa berjalan dan di-handle langsung oleh redisMaster/clusterdb1. Lalu bagaimana jika semua redis mati?
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/14.JPG)
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/15.JPG)
 
 Maka status Redis pada WordPress langsung menampilkan ``Not Connected``. Jika kita coba nyalakan lagi semua redis, maka status ``Not Connected`` berubah menjadi ``Connected``.
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/16.JPG)
 
-![]()
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/17.JPG)
+
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/18.JPG)
+
+![](https://github.com/abyan28/Distributed-Database/raw/master/Cluster%2BRedis/screenshot/19.JPG)
 
 ## G. Referensi
 https://wordpress.org/plugins/redis-cache/
